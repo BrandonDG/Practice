@@ -34,6 +34,14 @@ void postorder_traversal(node *root) {
 	}
 }
 
+void destroy_tree(node *root) {
+	if (root != 0) {
+		destroy_tree(root->left);
+		destroy_tree(root->right);
+		free(root);
+	}
+}
+
 // Create a new node and return a pointer.
 node *create_node(int data) {
 	node *new_node = malloc(sizeof(node));
@@ -77,6 +85,8 @@ int main() {
 	printf("\nPostorder\n");
 	postorder_traversal(root);
 
+	printf("\nDestroying List\n");
+	destroy_tree(root);
 
 	return 0;
 }
