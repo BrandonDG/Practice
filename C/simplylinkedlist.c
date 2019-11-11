@@ -37,7 +37,6 @@ int prepend_node(node **lst, int data) {
 	return 1;
 }
 
-
 // Destory the whole list.
 void list_destroy(node *head) {
 	node *q = 0;
