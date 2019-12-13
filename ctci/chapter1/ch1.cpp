@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -154,7 +155,72 @@ void question2_v4() {
   cout << "PERMUTATION" << endl;
 }
 
+/* Write a method to replace all spaces in a string with "%20." Assume there
+are enough space in the string for the additional characters. */
+
+// My first go at the solution. Not as good as optimal.
+// The right idea, however, I was recalculating the move var
+// each time which is unneccessary work. I was also looping and
+// moving over the characters, which is bad because if you pay
+// attention to the actual index you can do direct indexing (much better).
+void question3_v1() {
+  // q3
+  char s[18] = "Mr John Smith    ";
+  int true_length = 13;
+  int space_count = 0;
+  int move_num = 0;
+
+  for (int i = 0; i < true_length; ++i) {
+    if (s[i] == ' ') {
+      ++space_count;
+    }
+  }
+
+  for (int i = true_length - 1; i >= 0; --i) {
+    move_num = i + (space_count * 2);
+    if (s[i] == ' ') {
+      s[move_num] = '0';
+      s[move_num - 1] = '2';
+      s[move_num - 2] = '%';
+      --space_count;
+    } else {
+      for (int j = i; j < move_num; ++j) {
+        s[j + 1] = s[j];
+      }
+    }
+  }
+  cout << s << endl;
+}
+
+// C++ version of the optimal solution.
+void question3_v2() {
+  char s[18] = "Mr John Smith    ";
+  int true_length = 13;
+  int space_count = 0;
+  int index = 0;
+
+  for (int i = 0; i < true_length; ++i) {
+    if (s[i] == ' ') {
+      ++space_count;
+    }
+  }
+
+  index = true_length + space_count * 2;
+  for (int i = true_length - 1; i >= 0; --i) {
+    if (s[i] == ' ') {
+      s[index - 1] = '0';
+      s[index - 2] = '2';
+      s[index - 3] = '%';
+      index -= 3;
+    } else {
+      s[index - 1] = s[i];
+      --index;
+    }
+  }
+  cout << s << endl;
+}
+
 int main() {
-  question2_v4();
+  question3_v2();
   return 0;
 }
