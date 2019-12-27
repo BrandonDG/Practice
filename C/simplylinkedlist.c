@@ -19,7 +19,7 @@ void list_iterate(node *head) {
 // Iterate through the list using a double pointer.
 void list_iterate_2(node **lst) {
 	node **tracer;
-	for (tracer = lst; (*tracer) != 0; tracer = &(*tracer)->next) {
+	for (tracer = lst; *tracer != 0; tracer = &(*tracer)->next) {
 		printf("%d\n", (*tracer)->data);
 	}
 }
@@ -40,12 +40,12 @@ int prepend_node(node **lst, int data) {
 // Destory the whole list.
 void list_destroy(node *head) {
 	node *q = 0;
-        printf("Destroying the list.\n");
-        for (node *p = head; p != 0; p = q) {
-                printf("Freeing %d with value %d\n", (int)(&(*p)), p->data);
-                q = p->next;
-                free(p);
-        }
+  printf("Destroying the list.\n");
+  for (node *p = head; p != 0; p = q) {
+    printf("Freeing %d with value %d\n", (int)(&(*p)), p->data);
+    q = p->next;
+    free(p);
+  }
 }
 
 // Remove the node that matches the data (first occurrence)
@@ -125,7 +125,7 @@ int main(int argc, char **argv) {
 			printf("Input not accepted\n");
 			continue;
 		}
-		
+
 		// Parse the choice from the user.
 		switch(choice) {
 			case 1:
@@ -136,7 +136,7 @@ int main(int argc, char **argv) {
 					printf("Current List: \n");
 					list_iterate_2(lst);
 					printf("\n\n\n");
-				}	
+				}
 				break;
 			case 2:
 				printf("Selected Remove\n");
