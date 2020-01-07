@@ -87,6 +87,7 @@ void destroy(stack *s) {
     q = p->next;
     free(p);
   }
+  s->top = 0;
 }
 
 int main() {
@@ -98,6 +99,12 @@ int main() {
   push(s, 3);
 
   viewstack_2(s);
+
+  destroy(s);
+
+  viewstack_2(s);
+
+  free(s);
 
   return 0;
 }
