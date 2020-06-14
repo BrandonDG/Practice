@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define CHECK(PRED) printf("%s...%s\n", (PRED) ? "\033[0;32m passed" : "\033[0;31m FAILED", #PRED)
+
 // d_array class template.
 template <class T>
 class d_array {
@@ -137,24 +139,53 @@ public:
 // Main
 int main() {
   d_array<string> da;
-  for (int i = 0; i < 16; ++i) {
-    da.prepend(to_string(i));
+  for (int i = 0; i < 14; ++i) {
+    da.push(to_string(i));
   }
 
+  printf("\033[0m\nTesting get_size() @ 14\n");
+  CHECK(da.get_size() == 14);
+
+  printf("\033[0m\nTesting get_capacity() @ 16\n");
+  CHECK(da.get_capacity() == 16);
+
+  printf("\033[0m\nTesting isEmpty() @ 14\n");
+  CHECK(da.isEmpty() == 0);
+
+  printf("\033[0m\nTesting push(T item) by inserting \"15\"\n");
+  da.push("15");
+  CHECK(da.at(da.get_size() - 1) == "15");
+
+  printf("\033[0m\nTesting prepend(T item) by inserting -1\n");
+  da.prepend("-1");
+  CHECK(da.at(0) == "-1");
+
+  printf("\033[0m\nTesting insert(T data, int index) by inserting 2 @ 2\n");
+  da.insert("2", 2);
+  CHECK(da.at(2) == "2");
+
+  printf("\033[0m\nTesting resize() by pushing past capacity in previous test\n");
+  CHECK(da.get_capacity() == 32);
+
+  printf("\033[0m\nTesting delete_index(int index) by deleting at 0\n");
   da.delete_index(0);
-  da.delete_index(4);
-  da.remove_item("9");
+  CHECK(da.at(0) == "0");
 
-  cout << "Pop: " << da.pop() << endl;
-  cout << "Size: " << da.get_size() << endl;
-  cout << "Capacity: " << da.get_capacity() << endl;
-  cout << "isEmpty: " << da.isEmpty() << endl;
-  cout << "At(0): " << da.at(4) << endl;
-  cout << "Find(5): " << da.find("5") << endl;
+  printf("\033[0m\nTesting pop() by popping at 15\n");
+  CHECK(da.pop() == "15");
 
-  for (int i = 0; i < da.get_size(); ++i) {
-    cout << da.at(i) << endl;
-  }
+  printf("\033[0m\nTesting remove_item(int item) removing the both 2s\n");
+  da.remove_item("2");
+  CHECK(da.at(1) == "1" && da.at(2) == "3");
+
+  printf("\033[0m\nTesting at(int index) by grabbing index 9\n");
+  CHECK(da.at(9) == "10");
+
+  printf("\033[0m\nTesting find(int item) by grabbing index 13\n");
+  CHECK(da.find("13") == 12);
+
+  printf("\033[0m\nTesting find(const d_array *da, int item) by failing to grab 2\n");
+  CHECK(da.find("2") == -1);
 
   return 0;
 }

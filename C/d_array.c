@@ -194,11 +194,11 @@ int main() {
 
   printf("\033[0m\nTesting find(const d_array *da, int item) by grabbing index 13\n");
   tmp = find(da, 13);
-  CHECK(tmp = 12);
+  CHECK(tmp == 12);
 
   printf("\033[0m\nTesting find(const d_array *da, int item) by failing to grab 2\n");
   tmp = find(da, 2);
-  CHECK(tmp = -1);
+  CHECK(tmp == -1);
 
   return 0;
 }
